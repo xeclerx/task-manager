@@ -88,7 +88,6 @@ Task_Manager_Project/
 │   │   ├── __init__.py
 │   │   └── conftest.py
 │   └── __init__.py
-├── frontend/
 └── requirements.txt
 ```
 
