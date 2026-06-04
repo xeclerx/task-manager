@@ -9,22 +9,25 @@
 ![License](https://img.shields.io/github/license/xeclerx/task-manager)
 ![Last Commit](https://img.shields.io/github/last-commit/xeclerx/task-manager)
 
-Backend REST API для управления задачами и категориями.
+Backend REST API для управления задачами.
 
 Проект реализован на **FastAPI**, **SQLAlchemy**, **Pydantic** и **PostgreSQL**.  
-В проекте есть CRUD-операции, валидация данных, работа с базой данных, тесты на `pytest` и логирование.
+В проекте есть CRUD-операции для задач, валидация данных, работа с базой данных, тесты на `pytest` и логирование.
 
 ---
 
 ## Возможности
 
-- Создание, получение, обновление и удаление задач
-- Создание, получение, обновление и удаление категорий
+- Создание задач
+- Получение списка задач
+- Обновление задач
+- Удаление задач
+- Изменение статуса выполнения задачи
 - Валидация входных и выходных данных через Pydantic
 - Работа с PostgreSQL через SQLAlchemy ORM
-- Разделение проекта на слои: routers, services, repositories, models, schemas
+- Разделение backend-приложения на слои
 - Dependency Injection через FastAPI Depends
-- Тестирование через pytest
+- Тестирование бизнес-логики через pytest
 - Логирование работы приложения
 - CORS для взаимодействия с frontend
 
@@ -46,41 +49,60 @@ Backend REST API для управления задачами и категор�
 ## Архитектура проекта
 
 ```text
-backend/
-└── app/
-    ├── api/
-    │   ├── routers/
-    │   ├── dependencies.py
-    │   └── dependencies_category.py
-    ├── core/
-    │   └── config.py
-    ├── db/
-    │   └── session.py
-    ├── models/
-    │   ├── base.py
-    │   ├── task.py
-    │   └── category.py
-    ├── repositories/
-    │   ├── task.py
-    │   └── category.py
-    ├── schemas/
-    │   ├── task.py
-    │   └── category.py
-    ├── services/
-    │   ├── task.py
-    │   └── category.py
-    └── main.py
+Task_Manager_Project/
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── routers/
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── task.py
+│   │   │   ├── __init__.py
+│   │   │   ├── dependencies.py
+│   │   │   └── router.py
+│   │   ├── core/
+│   │   │   ├── __init__.py
+│   │   │   ├── config.py
+│   │   │   └── logging.py
+│   │   ├── db/
+│   │   │   ├── __init__.py
+│   │   │   └── session.py
+│   │   ├── models/
+│   │   │   ├── __init__.py
+│   │   │   ├── base.py
+│   │   │   └── task.py
+│   │   ├── repositories/
+│   │   │   ├── __init__.py
+│   │   │   └── task.py
+│   │   ├── schemas/
+│   │   │   ├── __init__.py
+│   │   │   └── task.py
+│   │   ├── services/
+│   │   │   ├── __init__.py
+│   │   │   └── task.py
+│   │   ├── __init__.py
+│   │   └── main.py
+│   ├── tests/
+│   │   ├── services/
+│   │   │   ├── __init__.py
+│   │   │   └── test_task_service.py
+│   │   ├── __init__.py
+│   │   └── conftest.py
+│   └── __init__.py
+├── frontend/
+└── requirements.txt
 ```
 
 ### Основные слои
 
-- `routers` — обработка HTTP-запросов
+- `api` — роутеры и зависимости FastAPI
+- `routers` — HTTP-эндпоинты приложения
 - `schemas` — Pydantic-схемы для валидации данных
 - `models` — SQLAlchemy ORM-модели
 - `repositories` — слой работы с базой данных
 - `services` — бизнес-логика приложения
 - `db` — подключение к базе данных
-- `core` — настройки проекта
+- `core` — конфигурация и логирование
+- `tests` — тесты приложения на pytest
 
 ---
 
@@ -94,15 +116,6 @@ backend/
 | POST | `/tasks` | Создать задачу |
 | PATCH | `/tasks/{task_id}` | Обновить задачу |
 | DELETE | `/tasks/{task_id}` | Удалить задачу |
-
-### Categories
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/categories` | Получить список категорий |
-| POST | `/categories` | Создать категорию |
-| PATCH | `/categories/{category_id}` | Обновить категорию |
-| DELETE | `/categories/{category_id}` | Удалить категорию |
 
 ---
 
@@ -122,14 +135,6 @@ backend/
 {
   "title": "Изучить FastAPI и SQLAlchemy",
   "completed": true
-}
-```
-
-### Создание категории
-
-```json
-{
-  "name": "Учёба"
 }
 ```
 
@@ -223,13 +228,13 @@ pytest
 ## Что реализовано
 
 - REST API на FastAPI
-- CRUD для задач и категорий
+- CRUD для задач
 - PostgreSQL в качестве базы данных
 - ORM-модели через SQLAlchemy
 - Pydantic-схемы для проверки данных
 - Dependency Injection через FastAPI Depends
 - Разделение backend-приложения на слои
-- Pytest-тесты
+- Pytest-тесты для сервисного слоя
 - Логирование
 - Подключение CORS для frontend-приложения
 
