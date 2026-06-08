@@ -80,7 +80,7 @@ def test_update_task_updates_only_passed_fields(
 
     result = service.update_task("task-1", payload)
 
-    repository_mock.get_by_id.assert_called_once_with("task-1")
+    repository_mock.get_by_id.assert_called_once_with(task_id="task-1")
     db_mock.commit.assert_called_once_with()
     assert result.model_dump() == {
         "id": "task-1",

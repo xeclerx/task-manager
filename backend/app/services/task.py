@@ -26,9 +26,9 @@ class TaskService:
         if not task_for_update:
             raise TaskNotFoundError(f'Задача с {task_id} не найдена!')
 
-        if task_for_update.title:
+        if payload.title:
             task_for_update.title = payload.title
-        if task_for_update.completed is not None:
+        if payload.completed is not None:
             task_for_update.completed = payload.completed
 
         self.db.commit()

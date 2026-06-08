@@ -23,5 +23,5 @@ def repository_mock() -> Mock:
 def service(db_mock: Mock, repository_mock: Mock) -> TaskService:
     """Создаём TaskService один раз, чтобы переиспользовать в тестах"""
     task_service = TaskService(db_mock)
-    task_service.repository = repository_mock
+    task_service.task_repository = repository_mock
     return task_service
